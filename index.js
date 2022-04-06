@@ -3,8 +3,9 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
 const productRoutes = require("./api/productRoutes");
-
 const server = express();
+const errorHandler = require("./middlewares/errorHandler");
+
 mongoose.connect(process.env.DB_PASSKEY, () => console.log("Connected to DB"));
 
 // MIDDLEWARES
