@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
 const productRoutes = require("./api/productRoutes");
+const authRoutes = require("./api/authRoutes");
 const server = express();
 const errorHandler = require("./middlewares/errorHandler");
 
@@ -12,6 +13,7 @@ mongoose.connect(process.env.DB_PASSKEY, () => console.log("Connected to DB"));
 server.use(cors());
 server.use(express.json());
 server.use("/api", productRoutes);
+server.use("/api/auth", authRoutes);
 server.use(errorHandler);
 server.use((req, res, next) => {
   const err = new Error("Not found!");
