@@ -4,6 +4,8 @@ const cors = require("cors");
 require("dotenv").config();
 const productRoutes = require("./api/productRoutes");
 const authRoutes = require("./api/authRoutes");
+const wishlistRoutes = require("./api/wishlistRoutes");
+const cartRoutes = require("./api/cartRoutes");
 const server = express();
 const errorHandler = require("./middlewares/errorHandler");
 
@@ -14,6 +16,8 @@ server.use(cors());
 server.use(express.json());
 server.use("/api", productRoutes);
 server.use("/api/auth", authRoutes);
+server.use("/api", wishlistRoutes);
+server.use("/api", cartRoutes);
 server.use(errorHandler);
 server.use((req, res, next) => {
   const err = new Error("Not found!");

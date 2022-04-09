@@ -23,7 +23,13 @@ const User = mongoose.Schema({
     required: true,
     min: 6,
   },
-  createdOn: {
+  wishlist: {
+    type: Array,
+  },
+  cart: {
+    type: Array,
+  },
+  createdAt: {
     type: date,
     default: Date.now,
   },
