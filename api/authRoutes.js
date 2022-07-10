@@ -21,11 +21,10 @@ router.post("/login", async (req, res, next) => {
     );
     if (!matchPassword) return res.status(401).send(wrongCredentialsMessage);
     const token = jwt.sign({ user: userData._id }, process.env.JWT_SECRET);
-    res.header("auth-token", token).status(200).send({
+    res.status(200).send({
       message: "Successfully logged in!",
       token,
       firstName: userData.firstName,
-      _id: userData._id,
     });
   } catch (err) {
     next(err);

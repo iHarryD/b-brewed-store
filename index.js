@@ -6,6 +6,7 @@ const productRoutes = require("./api/productRoutes");
 const authRoutes = require("./api/authRoutes");
 const wishlistRoutes = require("./api/wishlistRoutes");
 const cartRoutes = require("./api/cartRoutes");
+const addressRoutes = require("./api/addressRoutes");
 const server = express();
 const errorHandler = require("./middlewares/errorHandler");
 
@@ -18,6 +19,7 @@ server.use("/api", productRoutes);
 server.use("/api/auth", authRoutes);
 server.use("/api", wishlistRoutes);
 server.use("/api", cartRoutes);
+server.use("/api", addressRoutes);
 server.use(errorHandler);
 server.use((req, res, next) => {
   const err = new Error("Not found!");
