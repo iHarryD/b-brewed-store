@@ -35,18 +35,24 @@ router.post("/addresses", verifyToken, async (req, res, next) => {
 });
 
 router.delete("/addresses", verifyToken, async (req, res, next) => {
+  const { addressID } = req.query;
   try {
-    await users
-      .findById(req.user, async (err, user) => {
-        if (user.wishlist.includes(req.body.productID)) {
-          user.wishlist = user.wishlist.filter(
-            (item) => item !== req.body.productID
-          );
-        }
-        const updatedUser = await user.save();
-        res.send(updatedUser.wishlist);
-      })
-      .clone();
+    addresses.findOneAndDelete(
+      {
+        $and: [{ belongsTo: req.user }, { _id: addressID }],
+      },
+      (err, doc) => {
+        if (err)
+          return res
+            .status(400)
+            .send({ message: "Couldn't delete this address." });
+        addresses.find({ belongsTo: req.user }, (err, doc) => {
+          if (err)
+            return res.status(400).send({ message: "Something went wrong." });
+          res.send(doc);
+        });
+      }
+    );
   } catch (err) {
     next(err);
   }
