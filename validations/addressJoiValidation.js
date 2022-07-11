@@ -9,7 +9,6 @@ function addressJoiValidation(data) {
     lastLineAddress: Joi.string().required(),
     city: Joi.string().required(),
     state: Joi.string().required(),
-    country: Joi.string().required(),
     zipCode: Joi.string().required(),
   });
   return addressSchema.validate(data);
