@@ -37,22 +37,14 @@ router.post("/addresses", verifyToken, async (req, res, next) => {
 router.delete("/addresses", verifyToken, async (req, res, next) => {
   const { addressID } = req.query;
   try {
-    addresses.findOneAndDelete(
-      {
-        $and: [{ belongsTo: req.user }, { _id: addressID }],
-      },
-      (err, doc) => {
-        if (err)
-          return res
-            .status(400)
-            .send({ message: "Couldn't delete this address." });
-        addresses.find({ belongsTo: req.user }, (err, doc) => {
-          if (err)
-            return res.status(400).send({ message: "Something went wrong." });
-          res.send(doc);
-        });
-      }
-    );
+    addresses.find({ belongsTo: req.user }, (err, doc) => {
+      if (err)
+        return res
+          .status(400)
+          .send({ message: "Couldn't delete this address." });
+      doc.find((address) => address._id === addressID).remove();
+      res.send(doc);
+    });
   } catch (err) {
     next(err);
   }
