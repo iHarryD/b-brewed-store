@@ -59,4 +59,17 @@ router.put("/cart/delete", verifyToken, async (req, res, next) => {
   }
 });
 
+router.delete("/cart/delete-all", async (req, res) => {
+  users.findByIdAndUpdate(
+    req.user,
+    { $pullAll: {} },
+    { new: true },
+    (err, doc) => {
+      if (err)
+        return res.status(500).send({ message: "Something went wrong." });
+      res.status(200).send({ message: "Cart emptied.", data: doc });
+    }
+  );
+});
+
 module.exports = router;
